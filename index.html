@@ -3,11 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Valentines Day</title>
+  <title>Valentine's Day</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     .gradient-background {
-      background: rgb(255, 208, 229);
       background: linear-gradient(180deg, rgba(255, 208, 229, 1) 0%, rgba(255, 232, 242, 1) 36%, rgba(255, 255, 255, 1) 100%);
     }
 
@@ -26,28 +25,43 @@
         transform: translateY(-10px);
       }
     }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    .typewriter {
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid black;
+      display: inline-block;
+    }
   </style>
 </head>
-<body class="gradient-background">
-  <div class="flex items-center justify-center h-screen">
-    <div class="flex flex-col items-center p-4">
-      <img id="imageDisplay" src="./images/image1.gif" alt="Cute kitten with flowers" class="rounded-md h-[300px]" style="object-fit: cover;" />
-      <h2 id="valentineQuestion" class="text-4xl font-bold italic text-[#bd1e59] my-4">Will you be my Valentine?</h2>
-      <div class="flex gap-4 pt-[20px] items-center" id="responseButtons">
-        <button id="yesButton"
-          class="bounce2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-[20px] font-medium disabled:pointer-events-none disabled:opacity-50 hover:bg-green-400 min-h-12 min-w-[75px] px-4 py-2 bg-green-500 text-white transition">
-          Yes
-        </button>
-        <button id="noButton"
-          class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-[20px] font-medium transition disabled:pointer-events-none disabled:opacity-50 hover:bg-red-700 h-12 min-w-[75px] w-auto px-4 py-2 bg-red-500 text-white">
-          No
-        </button>
-      </div>
+<body class="gradient-background flex items-center justify-center min-h-screen p-4">
+  <div class="flex flex-col items-center w-full max-w-md">
+    <img src="./images/her-1.jpg" alt="My Love" class="rounded-full h-[120px] w-[120px] object-cover border-4 border-[#bd1e59] shadow-lg mb-4" />
+    
+    <img id="imageDisplay" src="./images/image1.gif" alt="Cute kitten with flowers" class="rounded-md w-full max-w-xs object-cover" />
+    
+    <h2 id="valentineQuestion" class="text-2xl sm:text-3xl font-bold italic text-[#bd1e59] text-center my-4">
+      Will you be my Valentine My Wifey?
+    </h2>
+    
+    <div class="flex gap-4 pt-4 items-center" id="responseButtons">
+      <button id="yesButton" class="bounce2 text-[16px] sm:text-[20px] font-medium bg-green-500 text-white px-4 py-2 min-h-12 min-w-[75px] rounded-md hover:bg-green-400">
+        Yes
+      </button>
+      <button id="noButton" class="text-[16px] sm:text-[20px] font-medium bg-red-500 text-white px-4 py-2 h-12 min-w-[75px] rounded-md hover:bg-red-700">
+        No
+      </button>
     </div>
   </div>
 
   <script type="module">
     import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+    
     const yesButton = document.getElementById('yesButton');
     const noButton = document.getElementById('noButton');
     const imageDisplay = document.getElementById('imageDisplay');
@@ -55,41 +69,68 @@
     const responseButtons = document.getElementById('responseButtons');
   
     let noClickCount = 0;
-    let buttonHeight = 48; // Starting height in pixels
-    let buttonWidth = 80;
-    let fontSize = 20; // Starting font size in pixels
+    let buttonSize = 48;
+
     const imagePaths = [
-      "./images/image1.gif",
-      "./images/image2.gif",
-      "./images/image3.gif",
-      "./images/image4.gif",
-      "./images/image5.gif",
-      "./images/image6.gif",
-      "./images/image7.gif"
+      "./images/image1.gif", "./images/image2.gif", "./images/image3.gif", 
+      "./images/image4.gif", "./images/image5.gif", "./images/image6.gif", "./images/image7.gif"
+    ];
+
+    const messages = [
+      "No", "Are you sure Bbe? 🥺", "Pookie please 🥺💖", "Bbe, typo khilauxu 😘", 
+      "Don't do this to me :( my chali bbe", "You're breaking my heart my bbbe 💔", 
+      "Bbe, rasmalai khilawxu 🥩", "I'm gonna cry... 😭", 
+      "Please Bbe, I’ll do all the dishes 🫧", "Bbe I’ll give you all my snacks 🍫", 
+      "Bbe, Biryani khilawxu 🍛", "Bbe, My prettiest, most beautifullll bbe 😍💖", 
+      "Bbe, timile j maangeko tyo dinchu 💍", "Bbe, I love you more than anything 💖", 
+      "Now say yes, my forever Valentine 💞"
     ];
   
     noButton.addEventListener('click', function() {
-      if (noClickCount < 5) {
+      if (noClickCount < messages.length - 1) {
         noClickCount++;
-        imageDisplay.src = imagePaths[noClickCount];
-        buttonHeight += 35; // Increase height by 5px on each click
-        buttonWidth += 35;
-        fontSize += 25; // Increase font size by 1px on each click
-        yesButton.style.height = `${buttonHeight}px`; // Update button height
-        yesButton.style.width = `${buttonWidth}px`;
-        yesButton.style.fontSize = `${fontSize}px`; // Update font size
-        if (noClickCount < 6) {
-          noButton.textContent = ["No", "Are you sure?", "Pookie please", "Don't do this to me :(", "You're breaking my heart", "I'm gonna cry..."][noClickCount];
+        if (messages[noClickCount] === "Bbe, typo khilauxu 😘") {
+          imageDisplay.src = "./images/her-food.jpg";
+        } else {
+          imageDisplay.src = imagePaths[Math.min(noClickCount, imagePaths.length - 1)];
         }
+        buttonSize += 20;
+        yesButton.style.height = `${buttonSize}px`;
+        yesButton.style.width = `${buttonSize}px`;
+        yesButton.style.fontSize = `${Math.min(buttonSize - 20, 30)}px`;
+        noButton.textContent = messages[noClickCount];
       }
     });
   
     yesButton.addEventListener('click', () => {
-      imageDisplay.src = './images/image7.gif'; // Change to image7.gif
-      valentineQuestion.textContent = "Yayyy!! :3"; // Change the question text
-      responseButtons.style.display = 'none'; // Hide both buttons
-      confetti(); // Trigger confetti animation
+      imageDisplay.src = './images/her-final-1.jpg';
+      valentineQuestion.textContent = "Yayyy!! You’re my forever Valentine! 💖";
+      responseButtons.style.display = 'none';
+      confetti();
+
+      setTimeout(() => {
+        typeWriterEffect(
+          "Every heartbeat of mine whispers your name. You are the poetry in my soul, the light in my darkest days, and the reason behind my happiest moments. I promise to love you today, tomorrow, and forever. Happy Valentine's Day, my love! 💖",
+          valentineQuestion
+        );
+      }, 1000);
     });
+
+    function typeWriterEffect(text, element) {
+      element.textContent = "";
+      element.style.borderRight = "2px solid black"; 
+      let i = 0;
+      function type() {
+        if (i < text.length) {
+          element.textContent += text.charAt(i);
+          i++;
+          setTimeout(type, 50);
+        } else {
+          element.style.borderRight = "none"; 
+        }
+      }
+      type();
+    }
   </script>  
 </body>
 </html>
