@@ -40,7 +40,12 @@
   </style>
 </head>
 <body class="gradient-background flex items-center justify-center min-h-screen p-4">
-  <div class="flex flex-col items-center w-full max-w-md">
+  <audio id="backgroundMusic" loop>
+    <source src="./music/valentine.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <div class="flex flex-col items-center w-full max-w-md p-6">
     <img src="./images/her-1.jpg" alt="My Love" class="rounded-full h-[120px] w-[120px] object-cover border-4 border-[#bd1e59] shadow-lg mb-4" />
     
     <img id="imageDisplay" src="./images/image1.gif" alt="Cute kitten with flowers" class="rounded-md w-full max-w-xs object-cover" />
@@ -49,11 +54,11 @@
       Will you be my Valentine My Wifey?
     </h2>
     
-    <div class="flex gap-4 pt-4 items-center" id="responseButtons">
+    <div class="flex flex-col sm:flex-row gap-4 pt-4 items-center w-full" id="responseButtons">
       <button id="yesButton" class="bounce2 text-[16px] sm:text-[20px] font-medium bg-green-500 text-white px-4 py-2 min-h-12 min-w-[75px] rounded-md hover:bg-green-400">
         Yes
       </button>
-      <button id="noButton" class="text-[16px] sm:text-[20px] font-medium bg-red-500 text-white px-4 py-2 h-12 min-w-[75px] rounded-md hover:bg-red-700">
+      <button id="noButton" class="text-[16px] sm:text-[20px] font-medium bg-red-500 text-white px-4 py-2 min-h-auto min-w-[75px] rounded-md hover:bg-red-700 break-words">
         No
       </button>
     </div>
@@ -67,13 +72,14 @@
     const imageDisplay = document.getElementById('imageDisplay');
     const valentineQuestion = document.getElementById('valentineQuestion');
     const responseButtons = document.getElementById('responseButtons');
-  
+    const music = document.getElementById('backgroundMusic');
+
     let noClickCount = 0;
     let buttonSize = 48;
 
     const imagePaths = [
-      "./images/image1.gif", "./images/image2.gif", "./images/image3.gif", 
-      "./images/image4.gif", "./images/image5.gif", "./images/image6.gif", "./images/image7.gif"
+      "./images/image1.gif", "./images/her-1.jpg", "./images/image3.gif", 
+      "./images/image3.gif", "./images/her-1.jpg", "./images/image6.gif", "./images/image7.gif"
     ];
 
     const messages = [
@@ -90,23 +96,26 @@
       if (noClickCount < messages.length - 1) {
         noClickCount++;
         if (messages[noClickCount] === "Bbe, typo khilauxu 😘") {
-          imageDisplay.src = "./images/her-food.jpg";
+          imageDisplay.src = "./images/her-food-1.jpg";
         } else {
           imageDisplay.src = imagePaths[Math.min(noClickCount, imagePaths.length - 1)];
         }
+        console.log('path',imageDisplay.src)
         buttonSize += 20;
         yesButton.style.height = `${buttonSize}px`;
         yesButton.style.width = `${buttonSize}px`;
         yesButton.style.fontSize = `${Math.min(buttonSize - 20, 30)}px`;
         noButton.textContent = messages[noClickCount];
+        noButton.style.minHeight = "auto"; 
       }
     });
-  
+
     yesButton.addEventListener('click', () => {
       imageDisplay.src = './images/her-final-1.jpg';
       valentineQuestion.textContent = "Yayyy!! You’re my forever Valentine! 💖";
       responseButtons.style.display = 'none';
       confetti();
+      music.play();
 
       setTimeout(() => {
         typeWriterEffect(
